@@ -1,16 +1,9 @@
-/*
-move it in to helper function that returns the option, have another child function
-inside that returns X, Y axis values (name and price) then assing it to option
-*/
+import { PIE_CHART } from "../constant/constant";
+import getAxisValue from "../utils/getAxisValue";
 
-import getAxisValue from "./getXYaxisValue";
+const getGraphOptions = (products, chartType) => {
+  const { xAxis, yAxis } = getAxisValue(products);
 
-const getGraphOptions = (
-  products,
-  //  xAxisData,
-  //   yAxiesData,
-  chartType
-) => {
   const options = {
     plotOptions: {
       series: {
@@ -47,14 +40,13 @@ const getGraphOptions = (
     },
 
     xAxis: {
-      categories: getAxisValue(products).x,
-      // categories: xAxisData,
+      categories: xAxis,
     },
     series: [
       {
         name: "Price",
-        colorByPoint: chartType === "pie" && true,
-        data: getAxisValue(products).y,
+        colorByPoint: chartType === PIE_CHART && true,
+        data: yAxis,
       },
     ],
   };
