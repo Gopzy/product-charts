@@ -1,7 +1,8 @@
 import { PIE_CHART } from "../constant/constant";
+import { chart, products } from "../types/type";
 import getAxisValue from "../utils/getAxisValue";
 
-const getGraphOptions = (products, chartType) => {
+const getGraphOptions = (products: any, chartType: chart) => {
   const { xAxis, yAxis } = getAxisValue(products);
 
   const options = {

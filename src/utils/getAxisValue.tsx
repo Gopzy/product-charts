@@ -1,4 +1,6 @@
-const getAxisValue = (products) => {
+import { catagories, products } from "../types/type";
+
+const getAxisValue = (products: products[] | catagories) => {
   let obj = { xAxis: [], yAxis: [] };
   products.forEach((el) => {
     const objectType = typeof el === "object";
