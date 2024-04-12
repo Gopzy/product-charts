@@ -4,7 +4,13 @@ import HighchartsReact from "highcharts-react-official";
 import axios from "axios";
 import DropdownMenu from "../components/dropDown";
 import getGraphOptions from "../helper/getGraphOptions";
-import { Button, CircularProgress, Container, Grid } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Container,
+  Grid,
+  Stack,
+} from "@mui/material";
 import {
   CATEGORIES_API,
   COLUMN_CHART,
@@ -21,10 +27,20 @@ const Dashboard = () => {
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
 
-  const [buttonClicked, setButtonClicked] = useState<boolean>(true);
+  const [runReport, setRunReport] = useState<boolean>(false);
+  const [defaultChart, setDefaultChart] = useState(PIE_CHART);
+
   const [loading, setLoading] = useState(false);
 
-  const productData = selectedProducts.length ? selectedProducts : products;
+  //   const productData = selectedProducts.length ? selectedProducts : products;
+
+  const productData = (chartType) => {
+    if (!selectedProducts.length && !selectedCategories && catagories)
+      return catagories;
+    if (selectedProducts.length && chartType !== PIE_CHART)
+      return selectedProducts;
+    else return products;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +72,8 @@ const Dashboard = () => {
   const handleCategorySelect = (selectedValue) => {
     setSelectedCategories(selectedValue);
     setSelectedProducts([]);
-    setButtonClicked(false);
+    setRunReport(true);
+    setDefaultChart(PIE_CHART);
   };
 
   const handleProductSelect = (selectedValue) => {
@@ -67,13 +84,8 @@ const Dashboard = () => {
     !selectedProducts.some(({ title }) => title === selectedValue) &&
       setSelectedProducts([...selectedProducts, selectedProduct?.[0]]);
 
-    setButtonClicked(false);
-  };
-
-  const clearFilter = () => {
-    setSelectedCategories(null);
-    setSelectedProducts([]);
-    setProducts([]);
+    setRunReport(true);
+    setDefaultChart(PIE_CHART);
   };
 
   const getProductLabels = () => {
@@ -81,26 +93,33 @@ const Dashboard = () => {
       const newselectedProducts = selectedProducts.filter(
         ({ title }) => title !== rmTitle
       );
-
       setSelectedProducts(newselectedProducts);
     };
-
     return (
       <>
         {selectedProducts?.map(({ title }, index) => (
           <label key={index} onClick={() => removeProduct(title)}>
-            {title} <br />
+            {title}
           </label>
         ))}
       </>
     );
   };
 
+  const clearFilter = () => {
+    setSelectedCategories(null);
+    setSelectedProducts([]);
+    setProducts([]);
+    setRunReport(false);
+    setDefaultChart(PIE_CHART);
+  };
+
   const handleClick = () => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-      setButtonClicked(true);
+      setRunReport(false);
+      setDefaultChart(COLUMN_CHART);
     }, 3000);
   };
 
@@ -108,63 +127,82 @@ const Dashboard = () => {
     <Container>
       <Grid container spacing={2}>
         <Grid item xs={4}>
-          <Grid container alignItems="center" spacing={2}>
-            <Grid item xs={2}>
-              <h2>Filters</h2>
-            </Grid>
-            <Grid item xs={10}>
-              <Button onClick={clearFilter}>Clear</Button>
-            </Grid>
-            <Grid item xs={12}>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <h2>Filters</h2>
+            <Button
+              disabled={!selectedCategories && !selectedProducts.length}
+              onClick={clearFilter}
+            >
+              Clear
+            </Button>
+          </Stack>
+          <Stack
+            direction="column"
+            spacing={2}
+            style={{ height: "90vh" }}
+            justifyContent="space-between"
+          >
+            <Stack direction="column" spacing={2}>
               <DropdownMenu
                 disabled={false}
                 options={catagories}
                 onSelect={handleCategorySelect}
                 selectedOptions={selectedCategories}
               />
-            </Grid>
-            <Grid item xs={12}>
               <DropdownMenu
                 disabled={!selectedCategories}
                 options={products}
                 onSelect={handleProductSelect}
                 selectedOptions={selectedProducts}
               />
-            </Grid>
-            <Grid item xs={12}>
-              {getProductLabels()}
-            </Grid>
+              <Stack direction="column" alignItems="flex-start" spacing={1}>
+                {getProductLabels()}
+              </Stack>
+            </Stack>
 
-            <Grid item xs={12}>
-              <Button
-                variant="contained"
-                onClick={handleClick}
-                disabled={loading || buttonClicked}
-              >
-                {loading ? (
-                  <>
-                    processing... <CircularProgress size={24} color="inherit" />
-                  </>
-                ) : (
-                  " Run Report"
-                )}
-              </Button>
-            </Grid>
-          </Grid>
+            <Button
+              variant="contained"
+              onClick={handleClick}
+              disabled={loading || !runReport}
+            >
+              {loading ? (
+                <>
+                  processing... <CircularProgress size={24} color="inherit" />
+                </>
+              ) : (
+                " Run Report"
+              )}
+            </Button>
+          </Stack>
         </Grid>
         <Grid item xs={8}>
-          {!buttonClicked ? (
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={getGraphOptions(products, PIE_CHART)}
-            />
-          ) : null}
-          {selectedCategories && buttonClicked ? (
-            <HighchartsReact
-              highcharts={Highcharts}
-              options={getGraphOptions(productData, COLUMN_CHART)}
-            />
-          ) : null}
+          <Stack
+            direction="column"
+            spacing={2}
+            style={{ height: "90vh" }}
+            justifyContent="center"
+          >
+            {defaultChart === PIE_CHART ? (
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={getGraphOptions(productData(PIE_CHART), PIE_CHART)}
+              />
+            ) : null}
+            {defaultChart === COLUMN_CHART ? (
+              <HighchartsReact
+                highcharts={Highcharts}
+                options={getGraphOptions(
+                  productData(COLUMN_CHART),
+                  COLUMN_CHART
+                )}
+              />
+            ) : null}
+          </Stack>
         </Grid>
       </Grid>
     </Container>

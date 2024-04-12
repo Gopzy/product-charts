@@ -36,7 +36,7 @@ const getGraphOptions = (products, chartType) => {
       type: chartType,
     },
     title: {
-      text: "My Products chart",
+      text: "Products in selected Category",
     },
 
     xAxis: {
