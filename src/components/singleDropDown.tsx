@@ -1,7 +1,8 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { useEffect, useState } from "react";
 import { catagories, products } from "../types/type";
 
-export default function DropdownMenu({
+export default function SingleDropdownMenu({
   options,
   onSelect,
   selectedOptions,
@@ -9,24 +10,27 @@ export default function DropdownMenu({
 }: {
   options: catagories | products[];
   onSelect: Function;
-  selectedOptions: string | products[];
+  selectedOptions: any;
   disabled: boolean;
 }) {
+  const [selectedValue, setSelectedValue] = useState("");
+
+  useEffect(() => {
+    setSelectedValue(selectedOptions);
+  }, [selectedOptions]);
+
   return (
     <FormControl fullWidth>
       <InputLabel id="label">Select Categories</InputLabel>
       <Select
         disabled={disabled}
-        // value={options?.find(function (option) {
-        //   return option.value === selectedOptions;
-        // })}
+        value={selectedValue}
         onChange={(event) => onSelect(event.target.value)}
       >
         {options?.map((el, index) => {
-          const objectType = typeof el === "object";
           return (
-            <MenuItem key={index} value={objectType ? el.title : el}>
-              {objectType ? el.title : el}
+            <MenuItem key={index} value={el}>
+              {el}
             </MenuItem>
           );
         })}

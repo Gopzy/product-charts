@@ -13,7 +13,7 @@ export const useChartData = () => {
   const [selectedCategories, setSelectedCategories] = useState<string>();
 
   const [products, setProducts] = useState<products[]>([]);
-  const [selectedProducts, setSelectedProducts] = useState<products[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
 
   const [runReport, setRunReport] = useState<boolean>(false);
   const [defaultChart, setDefaultChart] = useState<chart>(PIE_CHART);
@@ -47,7 +47,7 @@ export const useChartData = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  const productData = (chartType: chart) => {
+  const graphData = (chartType: chart) => {
     if (!selectedProducts.length && !selectedCategories && catagories)
       return catagories;
     if (selectedProducts.length && chartType !== PIE_CHART)
@@ -62,20 +62,14 @@ export const useChartData = () => {
     setDefaultChart(PIE_CHART);
   };
 
-  const handleProductSelect = (selectedValue: string) => {
-    const selectedProduct = products.filter(
-      ({ title }) => title === selectedValue
-    );
-
-    !selectedProducts.some(({ title }) => title === selectedValue) &&
-      setSelectedProducts([...selectedProducts, selectedProduct?.[0]]);
-
+  const handleProductSelect = (selectedValue: []) => {
+    setSelectedProducts(selectedValue);
     setRunReport(true);
     setDefaultChart(PIE_CHART);
   };
 
   const clearFilter = () => {
-    setSelectedCategories(null);
+    setSelectedCategories("");
     setSelectedProducts([]);
     setProducts([]);
     setRunReport(false);
@@ -104,6 +98,6 @@ export const useChartData = () => {
     loading,
     setSelectedProducts,
     defaultChart,
-    productData,
+    graphData,
   };
 };
