@@ -1,46 +1,44 @@
-# Getting Started with Create React App
+About the app:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+An application to Display Pie and Bar Chart dynamically using Products and Categories data.
 
-## Available Scripts
+Users have the option to select the available category from the drop down filter and can select the product/ products of that selected category after selecting the category.
 
-In the project directory, you can run:
+Once the option (category or products) is selected Pie charts of the selected category will be shown.
 
-### `npm start`
+When the “Run Report” button is clicked, after 3 seconds the “Bar column chart” will be displayed.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Users have the option to select single or multiple products from the filter.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+All the validation for the Filters, Run Report and Clear button is handled from frond end.
 
-### `npm test`
+Folder Structure:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Pages
+   Dashboard : main landing page
 
-### `npm run build`
+2. Components
+   button: Button component with loading state
+   singledopDown: Dropdown for single selector (category)
+   multiDropDown: Dropdown for single selector (products)
+3. Hook
+   useChartData: Custom hook to manage all local state and perform Network calls using hooks.
+4. Helper
+   getGrapOptions: to generate graph options objects for High charts (“Pie” and “Column” ).
+   getAxisValue: to get the X and Y axis value for the graph.
+5. Constant : define the constant variables and api constants
+6. Type: Defined the common type
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Framework used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Typescript: for type definition throughout the whole application (Product and Category data) .
+Axios: To fetch the get apis and process it. (Product and Category Api’s)
+React Hooks: useEffect, useState, useCallBack, useChartData (Custom Hook).
+Material UI: For designing UI components and styling.
+High Chart: For Column bar and Pie chart.
+Css
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+How to run the app,
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. yarn or npm install : install all the dependencues
+2. yarn start or npm start : to start the android app
