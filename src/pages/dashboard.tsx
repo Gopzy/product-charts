@@ -28,7 +28,7 @@ const Dashboard = () => {
     return (
       <>
         {selectedProducts?.map((el, index) => (
-          <label key={index}>{el}</label>
+          <label key={index}>{el?.title}</label>
         ))}
       </>
     );
@@ -43,14 +43,12 @@ const Dashboard = () => {
         spacing={2}
         sx={{ height: "100vh" }}
       >
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <Box
             sx={{
               bgcolor: "background.paper",
               borderColor: "grey.500",
               border: 1,
-              position: "fixed",
-              width: "300px",
               height: "85vh",
               padding: "20px",
             }}
@@ -97,7 +95,7 @@ const Dashboard = () => {
           </Box>
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <Stack
             direction="column"
             spacing={2}

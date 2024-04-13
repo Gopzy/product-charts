@@ -21,17 +21,19 @@ const MultiDropDown = ({
   selectedOptions: any;
   disabled: boolean;
 }) => {
-  const [selectedOption, setSelectedOption] = useState<string[]>([]);
+  const [selectedOption, setSelectedValue] = useState<string[]>([]);
+
+  const selectedTitleArray = selectedOptions.map(({ title }) => title);
 
   useEffect(() => {
-    setSelectedOption(selectedOptions);
-  }, [selectedOptions]);
+    setSelectedValue(selectedTitleArray);
+  }, [selectedTitleArray]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setSelectedOption(typeof value === "string" ? value.split(",") : value);
+    setSelectedValue(typeof value === "string" ? value.split(",") : value);
     onSelect(value);
   };
 

@@ -13,7 +13,7 @@ export const useChartData = () => {
   const [selectedCategories, setSelectedCategories] = useState<string>();
 
   const [products, setProducts] = useState<products[]>([]);
-  const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState([]);
 
   const [runReport, setRunReport] = useState<boolean>(false);
   const [defaultChart, setDefaultChart] = useState<chart>(PIE_CHART);
@@ -62,8 +62,11 @@ export const useChartData = () => {
     setDefaultChart(PIE_CHART);
   };
 
-  const handleProductSelect = (selectedValue: []) => {
-    setSelectedProducts(selectedValue);
+  const handleProductSelect = (selectedValue: any) => {
+    const selectedProduct = products.filter(({ title }) =>
+      selectedValue.includes(title)
+    );
+    setSelectedProducts(selectedProduct);
     defaultChart === PIE_CHART && setRunReport(true);
   };
 
@@ -95,7 +98,6 @@ export const useChartData = () => {
     runReport,
     handleClick,
     loading,
-    setSelectedProducts,
     defaultChart,
     graphData,
   };
