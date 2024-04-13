@@ -9,7 +9,6 @@ import HCButton from "../components/button";
 import MultiDropDown from "../components/multiDropDown";
 
 const Dashboard = () => {
-  // custom hook
   const {
     catagories,
     selectedCategories,
@@ -22,7 +21,6 @@ const Dashboard = () => {
     handleProductSelect,
     clearFilter,
     handleClick,
-    setSelectedProducts,
     graphData,
   } = useChartData();
 
@@ -50,8 +48,6 @@ const Dashboard = () => {
             sx={{
               bgcolor: "background.paper",
               borderColor: "grey.500",
-              //   top: 0,
-              //   left: 0,
               border: 1,
               position: "fixed",
               width: "300px",

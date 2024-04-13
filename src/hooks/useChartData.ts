@@ -64,8 +64,7 @@ export const useChartData = () => {
 
   const handleProductSelect = (selectedValue: []) => {
     setSelectedProducts(selectedValue);
-    setRunReport(true);
-    setDefaultChart(PIE_CHART);
+    defaultChart === PIE_CHART && setRunReport(true);
   };
 
   const clearFilter = () => {
