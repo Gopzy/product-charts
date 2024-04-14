@@ -2,7 +2,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import SingleDropdownMenu from "../components/singleDropDown";
 import getGraphOptions from "../helper/getGraphOptions";
-import { Box, Button, Container, Grid, Stack } from "@mui/material";
+import { Box, Button, Container, Grid, InputLabel, Stack } from "@mui/material";
 import { COLUMN_CHART, PIE_CHART } from "../constant/constant";
 import { useChartData } from "../hooks/useChartData";
 import HCButton from "../components/button";
@@ -28,7 +28,7 @@ const Dashboard = () => {
     return (
       <>
         {selectedProducts?.map((el, index) => (
-          <label key={index}>{el?.title}</label>
+          <InputLabel key={index}>{el?.title}</InputLabel>
         ))}
       </>
     );
