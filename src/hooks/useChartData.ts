@@ -58,8 +58,8 @@ export const useChartData = () => {
   const handleCategorySelect = (selectedValue: string) => {
     setSelectedCategories(selectedValue);
     setSelectedProducts([]);
-    setRunReport(true);
-    setDefaultChart(PIE_CHART);
+    setRunReport(false);
+    setDefaultChart(COLUMN_CHART);
   };
 
   const handleProductSelect = (selectedValue: any) => {
@@ -67,7 +67,8 @@ export const useChartData = () => {
       selectedValue.includes(title)
     );
     setSelectedProducts(selectedProduct);
-    defaultChart === PIE_CHART && setRunReport(true);
+    setDefaultChart(PIE_CHART);
+    setRunReport(true);
   };
 
   const clearFilter = () => {

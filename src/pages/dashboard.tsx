@@ -102,18 +102,10 @@ const Dashboard = () => {
             style={{ height: "90vh" }}
             justifyContent="center"
           >
-            {defaultChart === PIE_CHART ? (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={getGraphOptions(graphData(PIE_CHART), PIE_CHART)}
-              />
-            ) : null}
-            {defaultChart === COLUMN_CHART ? (
-              <HighchartsReact
-                highcharts={Highcharts}
-                options={getGraphOptions(graphData(COLUMN_CHART), COLUMN_CHART)}
-              />
-            ) : null}
+            <HighchartsReact
+              highcharts={Highcharts}
+              options={getGraphOptions(graphData(defaultChart), defaultChart)}
+            />
           </Stack>
         </Grid>
       </Grid>
