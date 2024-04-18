@@ -48,18 +48,22 @@ export const useChartData = () => {
   }, [fetchProducts]);
 
   const graphData = (chartType: chart) => {
-    if (!selectedProducts.length && !selectedCategories && catagories)
-      return catagories;
-    if (selectedProducts.length && chartType !== PIE_CHART)
-      return selectedProducts;
-    else return products;
+    if (catagories) {
+      if (chartType === PIE_CHART) {
+        return catagories;
+      } else {
+        if (!selectedCategories && !selectedProducts.length) return catagories;
+        if (selectedProducts.length) return selectedProducts;
+        if (selectedCategories && !selectedProducts.length) return products;
+      }
+    } else return [];
   };
 
   const handleCategorySelect = (selectedValue: string) => {
     setSelectedCategories(selectedValue);
     setSelectedProducts([]);
-    setRunReport(false);
-    setDefaultChart(COLUMN_CHART);
+    setRunReport(true);
+    setDefaultChart(PIE_CHART);
   };
 
   const handleProductSelect = (selectedValue: any) => {
@@ -67,8 +71,7 @@ export const useChartData = () => {
       selectedValue.includes(title)
     );
     setSelectedProducts(selectedProduct);
-    setDefaultChart(PIE_CHART);
-    setRunReport(true);
+    // defaultChart === PIE_CHART && setRunReport(true);
   };
 
   const clearFilter = () => {
