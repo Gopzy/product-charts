@@ -14,6 +14,7 @@ const Dashboard = () => {
     selectedCategories,
     products,
     selectedProducts,
+    selectedGraphProducts,
     defaultChart,
     runReport,
     loading,
@@ -27,7 +28,7 @@ const Dashboard = () => {
   const getProductLabels = () => {
     return (
       <>
-        {selectedProducts?.map((el, index) => (
+        {selectedGraphProducts?.map((el, index) => (
           <InputLabel key={index}>{el?.title}</InputLabel>
         ))}
       </>
@@ -79,7 +80,7 @@ const Dashboard = () => {
                   disabled={!selectedCategories}
                   options={products}
                   onSelect={handleProductSelect}
-                  selectedOptions={selectedProducts}
+                  selectedOptions={selectedGraphProducts}
                 />
                 <Stack direction="column" alignItems="flex-start" spacing={1}>
                   {getProductLabels()}
