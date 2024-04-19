@@ -62,7 +62,7 @@ export const useChartData = () => {
 
   const handleCategorySelect = (selectedValue: string) => {
     setSelectedCategories(selectedValue);
-    setSelectedProducts([]);
+    setSelectedGraphProducts([]);
     setRunReport(true);
     setDefaultChart(PIE_CHART);
   };
@@ -108,6 +108,5 @@ export const useChartData = () => {
     defaultChart,
     graphData,
     selectedGraphProducts,
-    setSelectedGraphProducts,
   };
 };
