@@ -77,7 +77,6 @@ export const useChartData = () => {
 
   const clearFilter = () => {
     setSelectedCategories("");
-    setSelectedProducts([]);
     setSelectedGraphProducts([]);
     setProducts([]);
     setRunReport(false);
